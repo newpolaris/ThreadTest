@@ -1,16 +1,15 @@
 #include <iostream>
 #include <thread>
+
+#include "SkColorPriv.h"
+const auto k = SkAlphaMulQ();
 #include "SkBlitter.h"
-// #include "SkColorPriv.h"
-#undef NDEBUG
-#include <cassert>
 
 int main()
 {
-    // std::thread t0([]() { SkAlphaMulQ(); });
-    std::thread t1([]() { Executor(); });
-    // t0.join();
-    t1.join();
-    // assert( SkAlphaMulQ() == Executor() );
+    std::thread t0([]() { SkAlphaMulQ(); });
+    t0.join();
+    if (k != 0xFF00FF || SkAlphaMulQ() == 0xFF00FF)
+        std::cout << "FAIL" << std::endl;
     return 0;
 }
